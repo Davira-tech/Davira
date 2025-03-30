@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tic-Tac-Toe Game</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 50px;
+            background-color: #2c3e50;  /* Dark background */
+            color: black;  /* Black text color */
+        }
+
+        .board {
+            display: grid;
+            grid-template-columns: repeat(3, 100px);
+            grid-template-rows: repeat(3, 100px);
+            gap: 5px;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        .cell {
+            width: 100px;
+            height: 100px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #fff;
+            font-size: 2em;
+            border: 2px solid #333;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .cell:hover {
+            background-color: #f39c12;  /* Hover color */
+        }
+
+        .message {
+            font-size: 1.5em;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        button {
+            padding: 10px 20px;
+            font-size: 1em;
+            cursor: pointer;
+            border: none;
+            background-color: #16a085;
+            color: white;
+            border-radius: 5px;
+        }
+
+        button:hover {
+            background-color: #1abc9c;
+        }
+
+        /* Pop-up modal style */
+        .modal {
+            display: none;  /* Hidden by default */
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.4);
+            padding-top: 100px;
+        }
+
+        .modal-content {
+            background-color: #fff;
+            margin: auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 300px;
+            text-align: center;
+            border-radius: 10px;
+        }
+
+        .modal-content button {
+            background-color: #e74c3c;
+            margin-top: 10px;
+        }
+
+        /* Bold font for the winner text */
+        #winnerMessage {
+            font-weight: bold; /* Make text bold in the modal */
+        }
+
+        /* Styling for the credit text */
+        .credit {
+            margin-top: 30px;
+            font-size: 1.2em;
+            font-weight: bold;
+            color: #ecf0f1;  /* Light color for credit text */
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Tic-Tac-Toe</h1>
+    <div class="board" id="board"></div>
+    <div class="message" id="message"></div>
+    <button onclick="resetGame()">Restart Game</button>
+
+    <!-- The Modal for the winner -->
+    <div id="winnerModal" class="modal">
+        <div class="modal-content">
+            <p id="winnerMessage"></p>
+            <button onclick="closeModal()">Close</button>
+        </div>
+    </div>
+
+    <div class="credit" >This game is made by Divyanshu Verma.</div> <!-- Credit message -->
+
+    <script>
+        const boardElement = document.getElementById("board");
+        const messageElement = document.getElementById("message");
+        const winnerModal = document.getElementById("winnerModal");
+        const winnerMessage = document.getElementById("winnerMessage");
+
+        let board = Array(9).fill(null);
+        let currentPlayer = "X";
+        let gameActive = true;
+
+        function initializeBoard() {
+            boardElement.innerHTML = '';
+            for (let i = 0; i < 9; i++) {
+                const cell = document.createElement("div");
+                cell.classList.add("cell");
+                cell.addEventListener("click", () => makeMove(i));
+                boardElement.appendChild(cell);
+            }
+            messageElement.textContent = `Player ${currentPlayer}'s turn`;
+        }
+
+        function makeMove(index) {
+            if (board[index] || !gameActive) return;
+            board[index] = currentPlayer;
+            const cells = document.querySelectorAll(".cell");
+            cells[index].textContent = currentPlayer;
+            if (checkWinner()) {
+                gameActive = false;
+                winnerMessage.textContent = `Player ${currentPlayer} wins!`;
+                winnerModal.style.display = "block";  // Show the winner pop-up
+            } else if (board.every(cell => cell !== null)) {
+                winnerMessage.textContent = "It's a tie!";
+                winnerModal.style.display = "block";  // Show the tie pop-up
+            } else {
+                currentPlayer = currentPlayer === "X" ? "O" : "X";
+                messageElement.textContent = `Player ${currentPlayer}'s turn`;
+            }
+        }
+
+        function checkWinner() {
+            const winPatterns = [
+                [0, 1, 2], [3, 4, 5], [6, 7, 8],  // Rows
+                [0, 3, 6], [1, 4, 7], [2, 5, 8],  // Columns
+                [0, 4, 8], [2, 4, 6]               // Diagonals
+            ];
+
+            return winPatterns.some(pattern => {
+                const [a, b, c] = pattern;
+                return board[a] && board[a] === board[b] && board[a] === board[c];
+            });
+        }
+
+        function resetGame() {
+            board = Array(9).fill(null);
+            currentPlayer = "X";
+            gameActive = true;
+            initializeBoard();
+            messageElement.textContent = `Player ${currentPlayer}'s turn`;
+            winnerModal.style.display = "none";  // Hide the winner pop-up
+        }
+
+        function closeModal() {
+            winnerModal.style.display = "none";  // Hide the modal when clicked
+            resetGame();  // Reset the game after closing the modal
+        }
+
+        // Initialize the game board
+        initializeBoard();
+    </script>
+
+</body>
+</html>

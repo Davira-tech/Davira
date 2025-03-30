@@ -1,0 +1,128 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #70c5ce;
+    overflow: hidden;
+}
+
+#gameContainer {
+    position: relative;
+}
+
+canvas {
+    background-color: #87CEEB;
+    display: block;
+    border: 1px solid #000;
+}
+
+.modal {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: rgba(0, 0, 0, 0.7);
+    color: white;
+    padding: 20px;
+    border-radius: 10px;
+    display: none;
+    text-align: center;
+}
+
+button {
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: #ff0;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #ffd700;
+}
+/* Basic reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Styling for the body */
+body {
+    font-family: Arial, sans-serif;
+    background: linear-gradient(135deg, #ff7e5f, #feb47b); /* Gradient background */
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    justify-content: space-between;
+}
+
+/* Game container styling */
+#gameContainer {
+    position: relative;
+    flex-grow: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Canvas styling */
+#gameCanvas {
+    background-color: #87ceeb; /* Sky blue */
+    border: 2px solid #000;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Game over modal styling */
+.modal {
+    display: none; /* Hidden by default, will show when game is over */
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 20px;
+    background-color: rgba(0, 0, 0, 0.7);
+    color: white;
+    text-align: center;
+    border-radius: 10px;
+}
+
+#restartBtn {
+    background-color: #28a745;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+#restartBtn:hover {
+    background-color: #218838;
+}
+
+/* Credit message at the bottom */
+.credit {
+    position: absolute;
+    bottom: 10px;
+    width: 100%;
+    text-align: center;
+    font-size: 14px;
+    color: #333;
+    font-weight: bold;
+    background: rgba(0, 0, 0, 0.5);
+    padding: 10px 0;
+    border-radius: 5px;
+    box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.credit:hover {
+    color: #ff6347;
+    cursor: pointer;
+    text-decoration: underline;
+}
